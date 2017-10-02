@@ -1,2 +1,7 @@
+gulpfile.js
 node_modules
 package-lock.json
+*.env
+source
+dist
+index.html
