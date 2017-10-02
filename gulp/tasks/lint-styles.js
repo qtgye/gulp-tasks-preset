@@ -1,5 +1,4 @@
-let { isLocal, isDevelopment, isProduction, isWatching,
-      browserSync, gulpif, onStreamError, projectRoot } = require('../helpers.js');
+let { projectRoot } = require('../helpers.js');
 let gulp = require('gulp');
 let src = projectRoot('source/styles/**/*.scss');
 let sassLint = require('gulp-sass-lint');

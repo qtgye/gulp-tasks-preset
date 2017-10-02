@@ -32,6 +32,6 @@ module.exports = {
 
   watchFiles: projectRoot('source/styles/**/*.scss'),
 
-  deps: ['lint-styles'],
+  deps: isDev ? ['lint-styles'] : [],
 
 };
