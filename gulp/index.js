@@ -5,7 +5,7 @@ let dotenv = require('dotenv');
 let plumber = require('gulp-plumber');
 let notifier = require('node-notifier');
 let through = require('through2');
-let browserSync = require('browser-sync');
+let browserSync = require('browser-sync').create();
 
 let projectRoot = process.cwd();
 let args = minimist(process.argv.slice(2));
@@ -34,15 +34,13 @@ module.exports = {
   args,
   env,
   isWatching,
+  browserSync,
 
   // Environments
   isLocal,
   isDevelopment,
   isStaging,
   isProduction,
-
-
-  browserSync: browserSync.create(),
 
 
   projectRoot: (path = '') => `${projectRoot}/${path.trim('/')}`,
@@ -104,15 +102,14 @@ module.exports = {
           server: {
             basedir: './',
           },
-        }, () => { browserSync.initialized = true } );
+        }, () => { browserSync.initialized = true; });
 
         // Watch files
         for ( let task of tasks ) {
           // watch only for `watchFiles` if any
-          if ( !task.watchFiles || (!task.fn && !task.watchFn)) continue;
-          let watchFn = [task.name] || task.watchFn;
+          if ( !task.watchFiles ) continue;
           task.fn.call();
-          gulp.watch(task.watchFiles, [task.name], watchFn);
+          gulp.watch(task.watchFiles, [task.name]);
         }
 
       });

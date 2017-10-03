@@ -24,9 +24,13 @@ module.exports = {
               .pipe( gulpif( isProduction, autoprefixer()) )
               .pipe( gulpif( isProduction, cleanCSS()) )
             .pipe(gulpif( isDev, sourcemaps.write('.') ))
-            .pipe(gulpif( isWatching && browserSync.initialized, browserSync.stream() ))
-            .pipe(gulp.dest('dist/styles').on('end', function () {
+            .pipe(gulp.dest(dest).on('end', function () {
               notifier.notify({ title: 'Gulp', message: 'Styles Task Finished!' });
+              // Manually inject css to ensure compiled css will reflect
+              if ( isWatching && browserSync.initialized ) {
+                gulp.src(`${dest}/*.css`)
+                  .pipe(browserSync.stream());
+              }
             }));
   },
 
