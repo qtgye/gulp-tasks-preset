@@ -9,7 +9,14 @@ let browserSync = require('browser-sync');
 
 let projectRoot = process.cwd();
 let args = minimist(process.argv.slice(2));
-let env = dotenv.config();
+let env = dotenv.config().parsed;
+let isWatching = args._.includes('watch');
+
+// Environments
+let isLocal =  /^(local)$/i.test(env.ENV);
+let isDevelopment =  /(dev|development)/i.test(env.ENV);
+let isStaging =  /s(taging)/i.test(env.ENV);
+let isProduction =  !env.ENV || /(production)/i.test(env.ENV) ? true : false;
 
 
 if ( env.error ) {
@@ -17,39 +24,28 @@ if ( env.error ) {
 }
 
 
-
 /**
  * --------------------------------------------------------------------------------------------
- * THINGS NEED NOT BE EXPORTED
- * --------------------------------------------------------------------------------------------
- */
-
-// Provide a way to access current task
-gulp.Gulp.prototype.__runTask = gulp.Gulp.prototype._runTask;
-gulp.Gulp.prototype._runTask = function(task) {
-  this.currentTask = task;
-  this.__runTask(task);
-}
-
-
-
-/**
- * --------------------------------------------------------------------------------------------
- * THINGS NEED TO BE EXPORTED
+ * EXPORTS
  * --------------------------------------------------------------------------------------------
  */
 module.exports = {
 
-  projectRoot: (path = '') => `${projectRoot}/${path.trim('/')}`,
   args,
-  env: env.parsed,
-  isWatching: args._.includes('watch'),
+  env,
+  isWatching,
 
   // Environments
-  isLocal: /^(local)$/i.test(env.parsed.ENV),
-  isDevelopment: /(dev|development)/i.test(env.parsed.ENV),
-  isStaging: /s(taging)/i.test(env.parsed.ENV),
-  isProduction: !env.parsed.ENV || /(production)/i.test(env.parsed.ENV) ? true : false,
+  isLocal,
+  isDevelopment,
+  isStaging,
+  isProduction,
+
+
+  browserSync: browserSync.create(),
+
+
+  projectRoot: (path = '') => `${projectRoot}/${path.trim('/')}`,
 
 
   onStreamError: function (title = null) {
@@ -77,6 +73,50 @@ module.exports = {
   },
 
 
-  browserSync: browserSync.create(),
+  registerTasks: function ( tasksList = [] ) {
+    // Parse task files
+    let tasks = tasksList.map( taskName => {
+      let task = require(`${projectRoot}/gulp/tasks/${taskName}.js`);
+      return {
+        name: taskName,
+        fn: task.fn,
+        watchFiles: task.watchFiles,
+        watchFn: task.watchFn,
+        deps: task.deps,
+      };
+    });
+    // Register to gulp
+    for ( let task of tasks ) {
+      if ( !task.fn ) continue;
+      task.deps = Array.isArray(task.deps) ? task.deps : [];
+      gulp.task(task.name, task.deps, task.fn)
+    }
+    // Default task
+    gulp.task('default', tasks.map( task => task.name ));
+    // Watch task
+    if ( isWatching ) {
+      let watchDeps = tasks.map( task => task.name );
+
+      gulp.task('watch', watchDeps, function () {
+
+        // Start browserSync
+        browserSync.init({
+          server: {
+            basedir: './',
+          },
+        }, () => { browserSync.initialized = true } );
+
+        // Watch files
+        for ( let task of tasks ) {
+          // watch only for `watchFiles` if any
+          if ( !task.watchFiles || (!task.fn && !task.watchFn)) continue;
+          let watchFn = [task.name] || task.watchFn;
+          task.fn.call();
+          gulp.watch(task.watchFiles, [task.name], watchFn);
+        }
+
+      });
+    }
+  },
 
 };
