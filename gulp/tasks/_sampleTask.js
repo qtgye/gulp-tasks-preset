@@ -23,12 +23,4 @@ module.exports = {
   watchFiles: [ 'file1', 'file2', 'glob/**/*' ],
 
 
-  // Custom watch function
-  // [optional]
-  watchFn: async function () {
-    someOtherFunction();
-  },
-
-
-
 };

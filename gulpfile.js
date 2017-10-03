@@ -37,7 +37,7 @@ let prodOnlyTasks = [];
  * --------------------------------------------------------------------------------------------
  */
 
-let { isLocal, isDevelopment, isStaging, isProduction, registerTasks } = require('./gulp/helpers.js');
+let { isLocal, isDevelopment, isStaging, isProduction, registerTasks } = require('./gulp');
 
 tasks = isLocal || isDevelopment ? devOnlyTasks.concat(tasks) : tasks;
 tasks = isStaging || isProduction ? prodOnlyTasks.concat(tasks) : tasks

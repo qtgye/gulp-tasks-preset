@@ -1,5 +1,5 @@
 let { isDevelopment, isLocal, isStaging, isProduction, isWatching,
-      projectRoot, browserSync } = require('../helpers.js');
+      projectRoot, browserSync } = require('../');
 
 let rollup = require('rollup');
 let node = require('rollup-plugin-node-resolve');

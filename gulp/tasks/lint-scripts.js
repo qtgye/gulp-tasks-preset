@@ -1,5 +1,5 @@
 let { isDevelopment, isLocal, isStaging, isProduction,
-      projectRoot, onStreamError } = require('../helpers.js');
+      projectRoot, onStreamError } = require('../');
 
 let gulp = require('gulp');
 let jshint = require('gulp-jshint');
