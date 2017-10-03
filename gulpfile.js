@@ -34,19 +34,20 @@ let tasks = [
   'scripts'
 ];
 
-// Dev-only tasks
-if ( isDevelopment || isLocal ) {
-  tasks = [
-    'lint-styles',
-  ].concat(tasks);
-}
 
-// Staging/Prod-only tasks
-if ( isStaging || isProduction ) {
-  tasks = tasks.concat([
-    // 'lint-styles',
-  ]);
-}
+/**
+ * Local/Dev-only tasks
+ */
+let devOnlyTasks = [
+  'lint-styles',
+  'lint-scripts',
+];
+
+
+/**
+ * Staging/Prod-only tasks
+ */
+let prodOnlyTasks = [];
 
 
 
@@ -57,7 +58,9 @@ if ( isStaging || isProduction ) {
  * --------------------------------------------------------------------------------------------
  */
 
-let _tasks = tasks.map( taskName => {
+tasks = isLocal || isDevelopment ? devOnlyTasks.concat(tasks) : tasks;
+tasks = isStaging || isProduction ? prodOnlyTasks.concat(tasks) : tasks;
+tasks = tasks.map( taskName => {
   let task = require(`${projectRoot()}/gulp/tasks/${taskName}.js`);
   return {
     name: taskName,
@@ -75,14 +78,14 @@ let _tasks = tasks.map( taskName => {
  * --------------------------------------------------------------------------------------------
  */
 
-for ( let task of _tasks ) {
+for ( let task of tasks ) {
   if ( !task.fn ) continue;
   task.deps = Array.isArray(task.deps) ? task.deps : [];
   gulp.task(task.name, task.deps, task.fn)
 }
 
 // Default task
-gulp.task('default', _tasks.map( task => task.name ));
+gulp.task('default', tasks.map( task => task.name ));
 
 
 /**
@@ -93,8 +96,7 @@ gulp.task('default', _tasks.map( task => task.name ));
 
 
 if ( isWatching ) {
-  let watch = require('gulp-watch');
-  let watchDeps = _tasks.map( task => task.name );
+  let watchDeps = tasks.map( task => task.name );
 
   gulp.task('watch', watchDeps, function () {
 
@@ -106,7 +108,7 @@ if ( isWatching ) {
     }, () => { browserSync.initialized = true } );
 
     // Watch files
-    for ( let task of _tasks ) {
+    for ( let task of tasks ) {
       // watch only for `watchFiles` if any
       if ( !task.watchFiles || (!task.fn && !task.watchFn)) continue;
       let watchFn = [task.name] || task.watchFn;
