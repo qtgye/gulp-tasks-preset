@@ -111,6 +111,7 @@ The preset leverages the use of environment variables accross all tasks and conf
 - **Local/Development**
   - Assets are not minified
   - Sourcemaps are included
+  - Linter tasks are available
   - Watch task is available
 - **Staging/Production**
   - Assets are minified
