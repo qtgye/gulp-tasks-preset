@@ -12,16 +12,16 @@ let args = minimist(process.argv.slice(2));
 let env = dotenv.config().parsed;
 let isWatching = args._.includes('watch');
 
+
+if ( !env ) throw new Error('A .env file is required!'.red);
+
+
 // Environments
 let isLocal =  /^(local)$/i.test(env.ENV);
 let isDevelopment =  /(dev|development)/i.test(env.ENV);
 let isStaging =  /s(taging)/i.test(env.ENV);
 let isProduction =  !env.ENV || /(production)/i.test(env.ENV) ? true : false;
 
-
-if ( env.error ) {
-  throw new Error(env.error.message.red);
-}
 
 
 /**

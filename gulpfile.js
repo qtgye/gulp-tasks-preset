@@ -9,6 +9,7 @@
  * Each task should be the basename of the task's file
  */
 let tasks = [
+  'vendors',
   'styles',
   'scripts'
 ];
