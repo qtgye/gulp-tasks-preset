@@ -14,6 +14,7 @@ module.exports = {
 
 
   // An array of tasks to be executed and completed before your task will run
+  // i.e., gulp.task('sometask', deps, fn);
   // [optional]
   deps = ['task1', 'task2'],
 
