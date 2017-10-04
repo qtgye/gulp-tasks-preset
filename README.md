@@ -23,9 +23,12 @@ A set of gulp workflows I commonly use in projects
 ---
 
 ## Installation
-- You may clone this repository,  
-  `git clone https://github.com/qtgye/gulp-tasks-preset.git`
-- or just download and extract to your project folder, manually or by running this in terminal:
+The preset requires node version at least **7.10.1**.  
+
+
+You may install the preset in two ways:
+1. Clone this repository, `git clone https://github.com/qtgye/gulp-tasks-preset.git`
+2. Just download and extract to your project folder, either manually or by running this in terminal:
   ```sh
   curl -L https://github.com/qtgye/gulp-tasks-preset/archive/master.zip -o gulp-tasks-preset.zip && unzip gulp-tasks-preset.zip -d . && cp -a gulp-tasks-preset-master/* . && rm -rf gulp-tasks-preset.zip gulp-tasks-preset-master
   ```
