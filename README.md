@@ -10,7 +10,14 @@ A set of gulp workflows I commonly use in projects
   - [Environment Setup](#environment-setup)
   - [Gulpfile](#gulpfile)
   - [Tasks Included](#tasks-included)
+      - [lint-styles](#lint-styles)
+      - [lint-scripts](#lint-scripts)
+      - [scripts](#scripts)
+      - [styles](#styles)
+      - [vendors](#vendors)
+      - [Default and Watch](#default-and-watch)
   - [Creating New Tasks](#creating-new-tasks)
+  - [Environment Aware](#environment-aware)
 
 
 ---
@@ -71,6 +78,10 @@ However, if your current project requires more of the latest ES version, you wou
 This is just a barebones to get you started on a project utilising modules and es2015+.
 
 
+### Styles
+Uses [SASS](http://sass-lang.com/) precompiler.
+
+
 ### Vendors
 Simply concatenates vendors scripts and stylesheets.  
 
@@ -88,4 +99,22 @@ Watch task will only be registered if you run `gulp watch`.
 ---
 
 ## Creating New Tasks
-Every task should be on its own file inside `gulp/tasks` folder. You may use `_sampleTask.js` as a stub for your new task.
+Every task should be on its own file inside `gulp/tasks` folder. You may use `_sampleTask.js` as a stub for your new task.  
+The task's filename will be used as the gulp task's name. So a `copy-files` task should be in `copy-files.js` task.  
+> The existing tasks are designed to be [environment-aware](#environment-aware). It is recommended that you design new tasks in such way too.
+
+
+---
+
+## Environment Aware
+The preset leverages the use of environment variables accross all tasks and configurations in order to efficiently select stuff that will be used only on a specific environment. Some of these features are:
+- **Local/Development**
+  - Assets are not minified
+  - Sourcemaps are included
+  - Watch task is available
+- **Staging/Production**
+  - Assets are minified
+  - CSS media queries are combined
+  - No sourcemaps  
+
+All the environment variables and other helpers are available when you require the `gulp` directory. These are helpful when you build your own tasks.
