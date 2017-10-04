@@ -2,33 +2,16 @@ let { isDevelopment, isLocal, isStaging, isProduction, isWatching,
       projectRoot, browserSync } = require('../');
 
 let rollup = require('rollup');
-let node = require('rollup-plugin-node-resolve');
-let babel = require('rollup-plugin-babel');
 let uglify = require('rollup-plugin-uglify');
 let notifier = require('node-notifier');
 
-let entry = projectRoot('source/scripts/app.js');
 let output = projectRoot('dist/scripts/app.js');
 let isDev = isDevelopment || isLocal ? true : false;
 let isProd = isStaging || isProduction ? true : false;
 
-let rollupPlugins = isProd ? [ uglify() ] : [];
-rollupPlugins = rollupPlugins.concat([
-  babel({
-    exclude: 'node_modules/**', // only transpile our source code
-    runtimeHelpers: true,
-    presets: [[
-      "env", {
-        modules: false,
-      }
-    ]],
-    plugins: [
-      'external-helpers',
-    ]
-  }),
-  node(),
-]);
-
+// An options object has to be passed to rollup when using gulp,
+// but we'll stick to a separate config file for consitency
+let rollupConfig = require(projectRoot('rollup.config.js'));
 
 module.exports = {
 
@@ -36,10 +19,7 @@ module.exports = {
 
     try {
 
-      const bundle = await rollup.rollup({
-        input: entry,
-        plugins: rollupPlugins,
-      });
+      const bundle = await rollup.rollup(rollupConfig);
 
       await bundle.write({
         file: output,
@@ -74,7 +54,7 @@ module.exports = {
   deps: isDev ? [ 'lint-scripts' ] : [],
 
 
-  watchFiles: projectRoot('source/scripts/**/*.js')
+  watchFiles: projectRoot('source/scripts/**/*.js'),
 
 
 }
