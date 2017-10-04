@@ -24,14 +24,7 @@ module.exports = {
               .pipe( gulpif( isProduction, autoprefixer()) )
               .pipe( gulpif( isProduction, cleanCSS()) )
             .pipe(gulpif( isDev, sourcemaps.write('.') ))
-            .pipe(gulp.dest(dest).on('end', function () {
-              notifier.notify({ title: 'Gulp', message: 'Styles Task Finished!' });
-              // Manually inject css to ensure compiled css will reflect
-              if ( isWatching && browserSync.initialized ) {
-                gulp.src(`${dest}/*.css`)
-                  .pipe(browserSync.stream());
-              }
-            }));
+            .pipe(gulp.dest(dest).on('end', onStylesDone));
   },
 
   watchFiles: projectRoot('source/styles/**/*.scss'),
@@ -39,3 +32,17 @@ module.exports = {
   deps: isDev ? ['lint-styles'] : [],
 
 };
+
+
+
+// HELPERS
+// ------------------------------------------------
+
+function onStylesDone() {
+  notifier.notify({ title: 'Gulp', message: 'Styles Task Finished!' });
+  // Manually inject css to ensure compiled css will reflect
+  if ( isWatching && browserSync.initialized ) {
+    gulp.src(`${dest}/main.css`)
+      .pipe(browserSync.stream());
+  }
+}

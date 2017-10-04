@@ -28,21 +28,12 @@ module.exports = {
         sourcemap: isDev ? true : false,
       });
 
-      notifier.notify({
-        'title': 'Gulp',
-        'message': 'Scripts Task Finished!',
-      });
-
-      if ( isWatching && browserSync.initialized ) {
-        browserSync.reload();
-      }
+      if ( isWatching && browserSync.initialized ) browserSync.reload();
+      notifier.notify({ 'title': 'Gulp', 'message': 'Scripts Task Finished!'});
 
     } catch (error) {
       let title = 'Bundle Error!';
-      notifier.notify({
-        'title': title,
-        'message': error.message,
-      });
+      notifier.notify({ 'title': title, 'message': error.message });
       console.log(title.red);
       console.log(error.message);
       console.log(error.stack.gray);
