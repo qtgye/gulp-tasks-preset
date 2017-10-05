@@ -7,7 +7,7 @@
  */
 
 let { isDevelopment, isLocal, isStaging, isProduction, isWatching,
-      projectRoot, browserSync, onStreamError } = require('../');
+      projectRoot, browserSync, onStreamError } = require('gulp-tasks-preset');
 
 let fs = require('fs-extra');
 let gulp = require('gulp');

@@ -1,5 +1,5 @@
 let { isDevelopment, isLocal, isStaging, isProduction, isWatching,
-      projectRoot, browserSync } = require('../');
+      projectRoot, browserSync } = require('gulp-tasks-preset');
 
 let rollup = require('rollup');
 let uglify = require('rollup-plugin-uglify');

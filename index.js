@@ -71,10 +71,11 @@ module.exports = {
   },
 
 
-  registerTasks: function ( tasksList = [] ) {
+  registerTasks: function ( tasksList = [], tasksDirectory = 'gulp' ) {
     // Parse task files
     let tasks = tasksList.map( taskName => {
-      let task = require(`${projectRoot}/gulp/tasks/${taskName}.js`);
+      tasksDirectory = tasksDirectory.trim('/');
+      let task = require(`${projectRoot}/${tasksDirectory}/${taskName}.js`);
       return {
         name: taskName,
         fn: task.fn,

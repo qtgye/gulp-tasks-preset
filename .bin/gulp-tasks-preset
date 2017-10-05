@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+/**
+ * This executabe should only be responsible for initializing a clean install.
+ * API is available in the module itself.
+ */
+
+require('../install.js');

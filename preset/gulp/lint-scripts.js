@@ -1,5 +1,5 @@
 let { isDevelopment, isLocal, isStaging, isProduction,
-      projectRoot, onStreamError } = require('../');
+      projectRoot, onStreamError } = require('gulp-tasks-preset');
 
 let gulp = require('gulp');
 let jshint = require('gulp-jshint');

@@ -1,5 +1,5 @@
 let { isDevelopment, isLocal, isStaging, isProduction, isWatching,
-      projectRoot, browserSync } = require('./gulp');
+      projectRoot, browserSync } = require('gulp-tasks-preset');
 
 let fs = require('fs-extra');
 let babel = require('rollup-plugin-babel');

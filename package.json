@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "A gulp workflow containing common tasks I use at projects.",
   "main": "index.js",
+  "bin": "./.bin/gulp-tasks-preset",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,12 +18,13 @@
   ],
   "author": "qtgye <buquia.jace@gmail.com>",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.0",
     "browser-sync": "^2.18.13",
     "colors": "^1.1.2",
+    "deepmerge": "^1.5.2",
     "dotenv": "^4.0.0",
     "fs-extra": "^4.0.2",
     "fs-walk": "0.0.1",
@@ -36,16 +38,15 @@
     "gulp-sass": "^3.1.0",
     "gulp-sass-lint": "^1.3.3",
     "gulp-sourcemaps": "^2.6.1",
+    "jquery": "^3.2.1",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "minimist": "^1.2.0",
     "node-notifier": "^5.1.2",
+    "readline": "^1.3.0",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1"
-  },
-  "dependencies": {
-    "jquery": "^3.2.1"
   }
 }

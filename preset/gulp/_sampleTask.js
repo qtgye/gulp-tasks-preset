@@ -1,3 +1,7 @@
+// Access preset helpers and variables
+let { isDevelopment, browserSync, projectRoo }  = require('gulp-tasks-preset');
+
+// External modules
 let gulp = require('gulp');
 let rename = require('gulp-rename');
 

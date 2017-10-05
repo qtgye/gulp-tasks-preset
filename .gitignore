@@ -1,4 +1,11 @@
+*.tgz
+.DS_Store
 node_modules
+<<<<<<< Updated upstream
+=======
+package-lock.json
+yarn.lock
+>>>>>>> Stashed changes
 *.env
 source
 dist
