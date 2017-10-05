@@ -4,11 +4,11 @@ let { isDevelopment, isLocal, isStaging, isProduction, isWatching,
 let fs = require('fs-extra');
 let babel = require('rollup-plugin-babel');
 let node = require('rollup-plugin-node-resolve');
+let uglify = require('rollup-plugin-uglify');
+
 let isDev = isDevelopment || isLocal ? true : false;
 let isProd = isStaging || isProduction ? true : false;
-
 let entry = projectRoot('source/scripts/app.js');
-
 let rollupPlugins = isProd ? [ uglify() ] : [];
 rollupPlugins = rollupPlugins.concat([
   babel(),

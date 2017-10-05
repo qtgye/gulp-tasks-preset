@@ -4,7 +4,7 @@ A set of gulp workflows I commonly use in projects
 
 ---
 
-## Table of Contents:
+## Table of Contents
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Environment Setup](#environment-setup)
