@@ -7,10 +7,10 @@ dist
 index.html
 
 # PRESET FILES IGNORED DURING DEV
-.babelrc
-.jshintrc
-.sass-lint.yml
-gulp/
-gulpfile.js
-rollup.config.js
-vendors.config.js
+/.babelrc
+/.jshintrc
+/.sass-lint.yml
+/gulp
+/gulpfile.js
+/rollup.config.js
+/vendors.config.js
