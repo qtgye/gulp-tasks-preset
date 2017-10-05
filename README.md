@@ -25,10 +25,15 @@ A set of gulp workflows I commonly use in projects
 ## Installation
 The preset requires node version at least **7.10.1**.  
 
-- Install the package through **npm**, `npm install --save-dev gulp-tasks-preset gulp`. We include **gulp** since it needs to be installed locally as well.
-- Install the preset files by running the executable, `./node_modules/.bin/gulp-tasks-preset`. This will prompt you to replace an existing gulpfile, if there is any.
-
-> You only need to install the preset files once during fresh setup. Reinstalling them again would result to your updated tasks files being overriden with the default.
+- Install the package through **npm**. We will include **gulp** since it needs to be installed locally as well.
+  ```sh
+  npm install --save-dev gulp-tasks-preset gulp
+  ```
+- Install the preset files by running the executable. This will prompt you to replace an existing gulpfile, if there is any.
+  ```sh
+  ./node_modules/.bin/gulp-tasks-preset
+  ```
+  **NOTE:** You only need to install the preset files **ONCE** during fresh setup. Reinstalling after the files are updated would result to them being reverted to the default.
 
 
 
@@ -99,9 +104,11 @@ This allow you to add and remove vendor files without having to restart gulp ove
 
 ### Default and Watch
 Default task will automatically run all the registered tasks in your gulpfile.  
+
 Watch task will only be registered if you run `gulp watch`.
 
 The watch task is in its own file, so you have the freedom to customize/override it (e.g., if you want to use proxy for the browserSync, etc.).
+It uses [gulp-watch](https://github.com/floatdrop/gulp-watch) plugin to allow new files to be included in the watch, which cannot be done with the native `gulp.watch`.
 
 
 
