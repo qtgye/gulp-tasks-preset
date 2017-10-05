@@ -18,7 +18,6 @@ module.exports = {
             .pipe(jshint.reporter('jshint-stylish'));
 
 
-  },
-
+  }
 
 };

@@ -22,6 +22,8 @@ let isDevelopment =  /(dev|development)/i.test(env.ENV);
 let isStaging =  /s(taging)/i.test(env.ENV);
 let isProduction =  !env.ENV || /(production)/i.test(env.ENV) ? true : false;
 
+let tasks = [];
+
 
 
 /**
@@ -41,6 +43,9 @@ module.exports = {
   isDevelopment,
   isStaging,
   isProduction,
+
+
+  get tasks() { return tasks },
 
 
   projectRoot: (path = '') => `${projectRoot}/${path.trim('/')}`,
@@ -72,8 +77,9 @@ module.exports = {
 
 
   registerTasks: function ( tasksList = [], tasksDirectory = 'gulp' ) {
+
     // Parse task files
-    let tasks = tasksList.map( taskName => {
+    tasks = tasksList.map( taskName => {
       tasksDirectory = tasksDirectory.trim('/');
       let task = require(`${projectRoot}/${tasksDirectory}/${taskName}.js`);
       return {
@@ -84,37 +90,20 @@ module.exports = {
         deps: task.deps,
       };
     });
+
     // Register to gulp
     for ( let task of tasks ) {
       if ( !task.fn ) continue;
       task.deps = Array.isArray(task.deps) ? task.deps : [];
       gulp.task(task.name, task.deps, task.fn)
     }
+
     // Default task
     gulp.task('default', tasks.map( task => task.name ));
+
     // Watch task
-    if ( isWatching ) {
-      let watchDeps = tasks.map( task => task.name );
+    if ( isWatching ) require(`${projectRoot}/${tasksDirectory}/watch.js`);
 
-      gulp.task('watch', watchDeps, function () {
-
-        // Start browserSync
-        browserSync.init({
-          server: {
-            basedir: './',
-          },
-        }, () => { browserSync.initialized = true; });
-
-        // Watch files
-        for ( let task of tasks ) {
-          // watch only for `watchFiles` if any
-          if ( !task.watchFiles ) continue;
-          task.fn.call();
-          gulp.watch(task.watchFiles, [task.name]);
-        }
-
-      });
-    }
   },
 
 };

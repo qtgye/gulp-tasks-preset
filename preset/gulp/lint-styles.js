@@ -10,8 +10,6 @@ module.exports = {
             .pipe(sassLint())
             .pipe(sassLint.format())
             .pipe(sassLint.failOnError());
-  },
-
-  watchFiles: src,
+  }
 
 };
