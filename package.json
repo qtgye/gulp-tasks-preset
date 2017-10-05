@@ -1,6 +1,6 @@
 {
   "name": "gulp-tasks-preset",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A gulp workflow containing common tasks I use at projects.",
   "main": "index.js",
   "scripts": {
