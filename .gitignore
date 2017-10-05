@@ -1,12 +1,16 @@
 *.tgz
 .DS_Store
 node_modules
-<<<<<<< Updated upstream
-=======
-package-lock.json
-yarn.lock
->>>>>>> Stashed changes
 *.env
 source
 dist
 index.html
+
+# PRESET FILES IGNORED DURING DEV
+.babelrc
+.jshintrc
+.sass-lint.yml
+gulp/
+gulpfile.js
+rollup.config.js
+vendors.config.js
