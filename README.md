@@ -10,19 +10,25 @@ A set of gulp workflows I commonly use in projects
   - [Environment Setup](#environment-setup)
   - [Gulpfile](#gulpfile)
   - [Tasks Included](#tasks-included)
+      - [lint-styles](#lint-styles)
+      - [lint-scripts](#lint-scripts)
+      - [scripts](#scripts)
+      - [styles](#styles)
+      - [vendors](#vendors)
+      - [Default and Watch](#default-and-watch)
   - [Creating New Tasks](#creating-new-tasks)
+  - [Environment Aware](#environment-aware)
 
 
 ---
 
 ## Installation
-- You may clone this repository,  
-  `git clone https://github.com/qtgye/gulp-tasks-preset.git`
-- or just download and extract to your project folder, manually or by running this in terminal:
-  ```sh
-  curl -L https://github.com/qtgye/gulp-tasks-preset/archive/master.zip -o gulp-tasks-preset.zip && unzip gulp-tasks-preset.zip -d . && cp -a gulp-tasks-preset-master/* . && rm -rf gulp-tasks-preset.zip gulp-tasks-preset-master
-  ```
-  > Keep in mind that you should be inside your project folder when running the commands.
+The preset requires node version at least **7.10.1**.  
+
+- Install the package through **npm**, `npm install --save-dev gulp-tasks-preset gulp`. We include **gulp** since it needs to be installed locally as well.
+- Install the preset files by running the executable, `./node_modules/.bin/gulp-tasks-preset`. This will prompt you to replace an existing gulpfile, if there is any.
+
+> You only need to install the preset files once during fresh setup. Reinstalling them again would result to your updated tasks files to be overriden with the default.
 
 
 
@@ -44,7 +50,7 @@ The gulpfile will only contain a way to register your desired tasks. Provided ar
 
 ---
 
-## Tasks included:
+## Tasks included
 - [lint-styles](#lint-styles)
 - [lint-scripts](#lint-scripts)
 - [scripts](#scripts)
@@ -71,6 +77,10 @@ However, if your current project requires more of the latest ES version, you wou
 This is just a barebones to get you started on a project utilising modules and es2015+.
 
 
+### Styles
+Uses [SASS](http://sass-lang.com/) precompiler.
+
+
 ### Vendors
 Simply concatenates vendors scripts and stylesheets.  
 
@@ -86,7 +96,27 @@ Watch task will only be registered if you run `gulp watch`.
 The watch task is in its own file, so you have the freedom to customize/override it (e.g., if you want to use proxy for the browserSync, etc.).
 
 
+
 ---
 
 ## Creating New Tasks
-Every task should be on its own file inside `gulp/tasks` folder. You may use `_sampleTask.js` as a stub for your new task.
+Every task should be on its own file inside `gulp/tasks` folder. You may use `_sampleTask.js` as a stub for your new task.  
+The task's filename will be used as the gulp task's name. So a `copy-files` task should be in `copy-files.js` task.  
+> The existing tasks are designed to be [environment-aware](#environment-aware). It is recommended that you design new tasks in such way too.
+
+
+---
+
+## Environment Aware
+The preset leverages the use of environment variables accross all tasks and configurations in order to efficiently select stuff that will be used only on a specific environment. Some of these features are:
+- **Local/Development**
+  - Assets are not minified
+  - Sourcemaps are included
+  - Linter tasks are available
+  - Watch task is available
+- **Staging/Production**
+  - Assets are minified
+  - CSS media queries are combined
+  - No sourcemaps  
+
+All the environment variables and other helpers are available when you require the `gulp` directory. These are helpful when you build your own tasks.
