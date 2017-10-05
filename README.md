@@ -73,13 +73,11 @@ registerTasks(tasks, 'new/tasks/folder');
 
 
 ### Lint Styles
-Uses [gulp-sass-lint](https://github.com/sasstools/gulp-sass-lint) as SASS linter.  
-A default `.sass-lint.yml` file is provided. For details about the config, please see 
+Uses [gulp-sass-lint](https://github.com/sasstools/gulp-sass-lint) as SASS linter. A default `.sass-lint.yml` file is provided. For details about the config, please refer to this link: https://github.com/sasstools/sass-lint#configuring.
 
 
 ### Lint Scripts
-Uses [gulp-jshint](https://github.com/spalger/gulp-jshint).  
-A default `.jshintrc` file is provided. It's default **esversion** setting is 6, due to es8(or next) still under the works on JSHint's end.
+Uses [gulp-jshint](https://github.com/spalger/gulp-jshint). A default `.jshintrc` file is provided. It's default **esversion** setting is 6, due to es8(or next) still under the works on JSHint's end.
 
 
 ### Scripts
@@ -115,8 +113,7 @@ It uses [gulp-watch](https://github.com/floatdrop/gulp-watch) plugin to allow ne
 ---
 
 ## Creating New Tasks
-Every task should be on its own file inside `gulp/tasks` folder. You may use `_sampleTask.js` as a stub for your new task.  
-The task's filename will be used as the gulp task's name. So a `copy-files` task should be in `copy-files.js` task.  
+Every task should be on its own file inside `gulp` folder. You may use `_sampleTask.js` as a template for your new task. The task's filename will be used as the gulp task's name. So a `copy-files` task should be in `copy-files.js` task.  
 > The existing tasks are designed to be [environment-aware](#environment-aware). It is recommended that you design new tasks in such way too.
 
 
