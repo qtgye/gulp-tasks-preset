@@ -11,7 +11,9 @@
 let tasks = [
   'vendors',
   'styles',
-  'scripts'
+  'scripts',
+  'fonts',
+  'images',
 ];
 
 
@@ -21,6 +23,7 @@ let tasks = [
 let devOnlyTasks = [
   'lint-styles',
   'lint-scripts',
+  'sprites',
 ];
 
 
