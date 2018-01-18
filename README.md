@@ -14,6 +14,9 @@ A set of gulp workflows I commonly use in projects
       - [lint-scripts](#lint-scripts)
       - [scripts](#scripts)
       - [styles](#styles)
+      - [sprites](#sprites)
+      - [images](#images)
+      - [fonts](#fonts)
       - [vendors](#vendors)
       - [Default and Watch](#default-and-watch)
   - [Creating New Tasks](#creating-new-tasks)
@@ -68,6 +71,9 @@ registerTasks(tasks, 'new/tasks/folder');
 - [lint-scripts](#lint-scripts)
 - [scripts](#scripts)
 - [styles](#styles)
+- [sprites](#sprites)
+- [images](#images)
+- [fonts](#fonts)
 - [vendors](#vendors)
 - [Default and Watch](#default-and-watch)
 
@@ -90,6 +96,18 @@ This is just a barebones to get you started on a project utilising modules and e
 
 ### Styles
 Uses [SASS](http://sass-lang.com/) precompiler.
+
+
+### Sprites
+Combines SVG icons into a single file as SVG symbols. Uses [gulp-svg-sprite](https://github.com/jkphl/gulp-svg-sprite).
+
+
+### Images
+Optimizes image assets. Uses [gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin).
+
+
+### Fonts
+Simply copies fonts into the public or dist folder.
 
 
 ### Vendors
