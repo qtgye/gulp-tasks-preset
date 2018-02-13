@@ -11,7 +11,7 @@
 let tasks = [
   'vendors',
   'styles',
-  'scripts',
+  'scripts', // Or use 'react' if you're building a react app
   'fonts',
   'images',
 ];
