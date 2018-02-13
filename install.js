@@ -78,6 +78,9 @@ async function copyFiles () {
                    '    - lint-styles.js',
                    '    - scripts.js',
                    '    - styles.js',
+                   '    - images.js',
+                   '    - sprites.js',
+                   '    - fonts.js',
                    '    - vendors.js',
                  ].join('\n').bgBlack.green;
 
