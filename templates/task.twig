@@ -1,0 +1,35 @@
+{% if require %}
+  {% for package in require %}
+const {{ package|replace({"-":"_"}) }} = require('{{package}}');
+  {% endfor %}
+{% else %}
+/** 
+ * Require modules
+ */
+// const gulp = require('gulp');
+{% endif %}
+
+/**
+ * Define gulp task
+ */
+module.exports = {
+
+  name: {{ name }},
+
+  task: function (done) {
+    
+    // gulp.src('some.file')
+    //     .pipe(somePackage())
+    //     .pipe(gulp.dest());
+
+  },
+
+{% if dependencies %}
+  dependencies: {{dependencies|json_encode}},
+{% else %}
+  // [Optional] List of dependencies to run before this task
+  // dependencies: [ 'one', 'two' ],
+{% endif %}
+
+
+}

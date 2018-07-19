@@ -1,3 +1,7 @@
+console.log('test');
+
+exit();
+
 require('colors');
 let gulp = require('gulp');
 let minimist = require('minimist');
