@@ -1,35 +1,46 @@
 {% if require %}
   {% for package in require %}
-const {{ package|replace({"-":"_"}) }} = require('{{package}}');
+const {{ package.variable|replace({"-":"_"}) }} = require('{{package.name}}');
   {% endfor %}
 {% else %}
-/** 
- * Require modules
- */
+// Require modules
 // const gulp = require('gulp');
 {% endif %}
 
-/**
- * Define gulp task
- */
+// Define gulp task
 module.exports = {
 
-  name: {{ name }},
+
+  name: '{{ name }}',
+
 
   task: function (done) {
     
-    // gulp.src('some.file')
-    //     .pipe(somePackage())
-    //     .pipe(gulp.dest());
+    // return gulp.src('some.file')
+    //          .pipe(somePackage())
+    //          .pipe(gulp.dest());
 
   },
+
 
 {% if dependencies %}
   dependencies: {{dependencies|json_encode}},
 {% else %}
-  // [Optional] List of dependencies to run before this task
+  /** [Optional] {Array} List of dependencies to run before this task */
   // dependencies: [ 'one', 'two' ],
 {% endif %}
+
+
+  /** [Optional] {Blob} Files to watch */
+  // watch: ['path/to/file/**.*', 'some/dir'],
+
+
+  /** [Optional] {RegExp} Specific environment to run this task */
+  // env: /^(staging|prod)%/i, // To run in  staging and production environments only
+
+
+  /** [Optional] Task description (shows up in list command) */
+  // description: `Some short but helpful description`,
 
 
 }

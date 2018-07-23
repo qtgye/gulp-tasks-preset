@@ -1,9 +1,10 @@
 *.tgz
 .DS_Store
-node_modules
+node_modules/
 *.env
-source
-dist
+source/
+src/
+dist/
 index.html
 
 # PRESET FILES IGNORED DURING DEV
