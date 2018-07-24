@@ -9,4 +9,4 @@ const expose = require(packageRoot('lib/expose'));
 /**
  * Select only methods to expose into the API
  */
-module.exports = expose('load', 'env', 'config', 'default');
+module.exports = expose('env', 'load', 'config');

@@ -15,7 +15,7 @@ const COLOR_ICONS = {
   'red'     : '✘',
 };
 
-module.exports = (message = '', someData) => {
+module.exports = (message = '', typeOrData, someData) => {
 
 
   // Determine messageColor
@@ -23,30 +23,31 @@ module.exports = (message = '', someData) => {
 
   let messageColor = 'white';
   let stopProcess = false;
+  let logData = typeOrData;
 
   // If no data, this must be just a simple log
-  if ( !someData ) {
+  if ( !typeOrData ) {
     messageColor = 'white';
   }
 
-  // Check if someData it indicates log type 
-  else if ( someData in LOG_TYPES ) {
-    messageColor = LOG_TYPES[someData];
-    someData = null;
+  // Check if typeOrData it indicates log type 
+  else if ( typeOrData in LOG_TYPES ) {
+    messageColor = LOG_TYPES[typeOrData];
+    logData = someData;
   }
 
   // If error
-  else if ( someData instanceof Error ) {
-    someData = someData.stack.red.dim;
+  else if ( typeOrData instanceof Error ) {
     messageColor = 'red';
     stopProcess = true;
+    logData = typeOrData.stack.red.dim;
   }
 
 
   // Output
   console.log(` ${COLOR_ICONS[messageColor]}   ${message}`[messageColor]);
-  if ( someData ) {
-    console.log(someData);
+  if ( logData ) {
+    console.log(logData);
   }
   // Output empty space
   console.log('');
