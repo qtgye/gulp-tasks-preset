@@ -12,7 +12,7 @@ const expose = require(packageRoot('lib/expose'));
 /**
  * Exposed CLI API methods
  */
-const COMMANDS = expose('create');
+const COMMANDS = expose('create', 'install');
 
 
 /** 
