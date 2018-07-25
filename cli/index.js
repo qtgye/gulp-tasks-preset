@@ -24,7 +24,7 @@ const COMMANDS = expose('create', 'install', 'list');
 // First argument should always be the command
 // If not given, use the "list" command by default
 // [TO DO]: Use a "help" default command
-const command = options._ && options._length ? options._[0] : 'list';
+const command = options._ && options._.length ? options._[0] : 'list';
 
 // Validate module and method 
 if ( !(command in COMMANDS) ) {
