@@ -1,7 +1,9 @@
 {% if require %}
-  {% for package in require %}
+{% for package in require %}
+{% if package.name %}
 const {{ package.variable|replace({"-":"_"}) }} = require('{{package.name}}');
-  {% endfor %}
+{% endif %}
+{% endfor %}
 {% else %}
 // Require modules
 // const gulp = require('gulp');
@@ -31,19 +33,37 @@ module.exports = {
 {% endif %}
 
 
-  /** [Optional] {Blob} Files to watch */
-  // watch: ['path/to/file/**.*', 'some/dir'],
-
   /** [Optional] {Boolean} If this is a dependency of "default" task */
+{% if default %}
+  default: true,
+{% else %}
   // default: true,
+{% endif %}
+
+
+  /** [Optional] {Blob} Files to watch */
+{% if watch %}
+  watch: {{watch}},
+{% else %}
+  // watch: ['path/to/file/**.*', 'some/dir'],
+{% endif %}
 
 
   /** [Optional] {RegExp} Specific environment to run this task */
+{% if env %}
+  env: {{env}},
+{% else %}
   // env: /^(staging|prod)%/i, // To run in  staging and production environments only
+{% endif %}
 
 
   /** [Optional] Task description (shows up in list command) */
+{% if description %}
+  description: `{{description}}`,
+{% else %}
   // description: `Some short but helpful description`,
+{% endif %}
+
 
 
 }
