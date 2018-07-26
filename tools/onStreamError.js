@@ -1,5 +1,6 @@
 const path = require('path');
 const plumber = require('gulp-plumber');
-const {print} = require(path.resolve(__dirname, './'));
+const print = require(`${__dirname}/print`);
 
-module.exports = (errorMessage = `An error has occured`) => plumber(err => print(errorMessage, 'error', err));
+
+module.exports = (errorMessage = `An error has occured`) => plumber(err => print(errorMessage, 'error', err))
