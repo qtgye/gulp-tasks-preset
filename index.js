@@ -1,7 +1,7 @@
 const path = require('path');
 const {
   packageRoot,
-} = require(path.resolve(__dirname, 'tools'));
+} = tools = require(path.resolve(__dirname, 'tools'));
 
 const expose = require(packageRoot('lib/expose'));
 
@@ -9,4 +9,19 @@ const expose = require(packageRoot('lib/expose'));
 /**
  * Select only methods to expose into the API
  */
-module.exports = expose('env', 'load', 'config', 'init');
+_exports = expose('env', 'load', 'config', 'init');
+
+/**
+ * Select only tools to expose
+ */
+[ 
+  'print',
+  'projectRoot',
+  'gulpIf',
+  'onStreamError'
+].map( toolName => _exports[toolName] = tools[toolName] );
+
+/**
+ * Export
+ */
+module.exports = _exports;
