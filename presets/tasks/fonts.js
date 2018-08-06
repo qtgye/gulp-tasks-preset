@@ -1,17 +1,18 @@
-let { isDevelopment, isLocal, isStaging, isProduction, isWatching,
-      projectRoot, browserSync } = require('gulp-tasks-preset');
+let { projectRoot } = require('gulp-tasks-preset');
 
 let gulp = require('gulp');
-let src = projectRoot('source/fonts/**/*.*');
-let dest = 'dist/images';
+let src = projectRoot('src/fonts/**/*.*');
+let dest = 'dist/fonts';
 
 module.exports = {
 
-  fn: async function () {
+  name: 'fonts',
+
+  task: function () {
     return gulp.src(src)
         .pipe(gulp.dest(dest));
   },
 
-  watchFiles: projectRoot(src),
+  watch: src,
 
 }
