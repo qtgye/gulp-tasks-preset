@@ -4,19 +4,15 @@ module.exports = {
   },
   "scripts": {
     "file": "scripts.js",
-    "includes": [ "webpack.config.js" ]
+    "includes": [ ".babelrc", "webpack.config.js" ]
   },
   "lint-scripts": {
-    "file": "lint-scriptss.js",
+    "file": "lint-scripts.js",
     "includes": [ ".jshintrc" ]
   },
   "lint-styles": {
     "file": "lint-styles.js",
     "includes": [ ".sass-lint.yml" ]
-  },
-  "react": {
-    "file": "react.js",
-    "includes": [ "webpack.config.js" ]
   },
   "vendors": {
     "file": "vendors.js",

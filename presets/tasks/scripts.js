@@ -5,6 +5,10 @@ const gutil = require('gulp-util');
 const browserSync = require('browser-sync');
 const webpackConfig = require(projectRoot(`webpack.config.js`));
 
+if ( env.matches(/dev|local/i) ) {
+  webpackConfig.devtool = 'source-map';
+}
+
 module.exports = {
 
   name: 'scripts',
