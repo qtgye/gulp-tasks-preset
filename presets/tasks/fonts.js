@@ -1,18 +1,22 @@
-let { projectRoot } = require('gulp-tasks-preset');
-
-let gulp = require('gulp');
-let src = projectRoot('src/fonts/**/*.*');
-let dest = 'dist/fonts';
+const gulp = require('gulp');
+const src = 'src/fonts/**/*.*';
 
 module.exports = {
 
+
   name: 'fonts',
 
-  task: function () {
+
+  description: 'Simply copies the font files',
+
+
+  task: () => {
     return gulp.src(src)
-        .pipe(gulp.dest(dest));
+        .pipe(gulp.dest('dist/fonts'));
   },
+
 
   watch: src,
 
-}
+
+};
