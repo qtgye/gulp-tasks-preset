@@ -1,5 +1,4 @@
-let { isLocal, isDevelopment, isProduction, isWatching,
-      browserSync, gulpif, onStreamError, projectRoot } = require('gulp-tasks-preset');
+const { env, projectRoot, onStreamError, gulpIf } = require('gulp-tasks-preset');
 let gulp = require('gulp');
 let sass = require('gulp-sass');
 let sasslint = require('gulp-sass-lint');
@@ -7,29 +6,32 @@ let sourcemaps = require('gulp-sourcemaps');
 let combineMq = require('gulp-combine-mq');
 let autoprefixer = require('gulp-autoprefixer');
 let cleanCSS = require('gulp-clean-css');
-let notifier = require('node-notifier');
+let browserSync = require('browser-sync');
 
-let isDev = isLocal || isDevelopment ? true : false;
-let src = projectRoot('source/styles/main.scss');
-let dest = projectRoot('dist/styles');
+let isDev = env.matches(/local|dev/i);
+let src = 'src/styles/main.scss';
+let dest = 'dist/styles';
 
 module.exports = {
 
-  fn: async function () {
+  name: 'styles',
+
+  task: (done) => {
+
     return gulp.src(src)
             .pipe(onStreamError('Styles Task Failed!'))
-            .pipe(gulpif( isDev, sourcemaps.init() ))
+            .pipe(gulpIf( isDev, sourcemaps.init() ))
             .pipe(sass().on('error', sass.logError))
-              .pipe( gulpif( isProduction, combineMq()) )
-              .pipe( gulpif( isProduction, autoprefixer()) )
-              .pipe( gulpif( isProduction, cleanCSS()) )
-            .pipe(gulpif( isDev, sourcemaps.write('.') ))
+              .pipe( gulpIf( !isDev, combineMq()) )
+              .pipe( gulpIf( !isDev, autoprefixer()) )
+              .pipe( gulpIf( !isDev, cleanCSS()) )
+            .pipe(gulpIf( isDev, sourcemaps.write('.') ))
             .pipe(gulp.dest(dest).on('end', onStylesDone));
   },
 
-  watchFiles: projectRoot('source/styles/**/*.scss'),
+  watch: 'src/styles/**/*.scss',
 
-  deps: isDev ? ['lint-styles'] : [],
+  deps: ['lint-styles'],
 
 };
 
@@ -39,10 +41,7 @@ module.exports = {
 // ------------------------------------------------
 
 function onStylesDone() {
-  notifier.notify({ title: 'Gulp', message: 'Styles Task Finished!' });
-  // Manually inject css to ensure compiled css will reflect
-  if ( isWatching && browserSync.initialized ) {
-    gulp.src(`${dest}/main.css`)
-      .pipe(browserSync.stream());
+  if ( browserSync.initialized ) {
+    this.pipe(browserSync.stream());
   }
 }

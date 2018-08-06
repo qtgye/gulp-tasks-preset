@@ -1,21 +1,32 @@
-let { projectRoot } = require('gulp-tasks-preset');
+const { env, projectRoot } = require('gulp-tasks-preset');
 
-let src = projectRoot('src/app.js');
 
 module.exports = {
-  entry: [ 'babel-polyfill', src ],
+  entry: `./src/scripts/app.js`,
   output: {
-    filename: 'app.js',
+    path: projectRoot(`dist/scripts`),
+    filename: `app.js`,
   },
   module: {
     rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        }
-      },
-    ]
-  }
-}
+         {
+             test: /\.js$/,
+             loader: 'babel-loader',
+             exclude: /node_modules/,
+             query: {
+                 "presets": [
+                    ["env", { "modules": false }]
+                  ],
+                  "plugins": [
+                    "external-helpers"
+                  ]
+             }
+         }
+     ]
+  },
+  stats: {
+    colors: true
+  },
+  mode: 'development',
+  devtool: 'sourcemaps',
+};
