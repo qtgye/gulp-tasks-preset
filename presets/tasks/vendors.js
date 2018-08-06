@@ -1,86 +1,47 @@
-/**
- * --------------------------------------------------------------------------------------------
- * VENDORS TASK
- *
- * Compiles vendors scripts and styles
- * --------------------------------------------------------------------------------------------
- */
-
-let { isDevelopment, isLocal, isStaging, isProduction, isWatching,
-      projectRoot, browserSync, onStreamError } = require('gulp-tasks-preset');
-
-let fs = require('fs-extra');
 let gulp = require('gulp');
 let concat = require('gulp-concat');
-let notifier = require('node-notifier');
-
-let configFile = projectRoot('vendors.config.js');
+let configFile = 'vendors.config.js';
 let dest = {
-  styles: projectRoot('dist/styles'),
-  scripts: projectRoot('dist/scripts')
+  styles: 'dist/styles',
+  scripts: 'dist/scripts',
 };
-
-let isDev = isDevelopment || isLocal ? true : false;
-let isProd = isStaging || isProduction ? true : false;
-let done = 0;
-
 
 
 module.exports = {
 
 
-  fn: function () {
+  name: 'vendors',
 
+
+  description: 'Compiles vendors scripts and styles',
+
+
+  task: done => {
     try {
+      // Remove cached vendor file as node module
+      delete require.cache[configFile];
 
       // Get vendors list
       let vendors = require(configFile);
-      done = 0;
+      let _done = 0;
 
       // Compile Vendor Scripts
       gulp.src(vendors.scripts)
-          .pipe(onFailedVendors())
           .pipe(concat('vendors.js'))
-          .pipe(gulp.dest(dest.scripts).on('end', doneVendors));
+          .pipe(gulp.dest(dest.scripts).on('end', () => ++_done === 2 ? done() : null));
 
       // Compile Vendor Styles
       gulp.src(vendors.styles)
-          .pipe(onFailedVendors())
           .pipe(concat('vendors.css'))
-          .pipe(gulp.dest(dest.styles).on('end', doneVendors));
+          .pipe(gulp.dest(dest.styles).on('end', () => ++_done === 2 ? done() : null));
 
     } catch(err) {
       console.log(err);
     }
-
-
   },
 
 
-  watchFiles: isDev ? [configFile] : [],
+  watch: configFile,
 
 
-}
-
-
-
-
-/**
- * --------------------------------------------------------------------------------------------
- * HELPER FUNCTIONS
- * --------------------------------------------------------------------------------------------
- */
-
-function doneVendors () {
-  // Manually reload browser
-  if ( isWatching && ++done === 2 ) browserSync.reload();
-  notifier.notify({
-    title: 'Gulp',
-    message: 'Compiled Vendor Assets!'
-  });
-}
-
-
-function onFailedVendors() {
-  return onStreamError('Vendor Task Failed!');
-}
+};
