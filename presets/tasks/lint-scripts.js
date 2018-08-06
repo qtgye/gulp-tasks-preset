@@ -1,23 +1,27 @@
-let { isDevelopment, isLocal, isStaging, isProduction,
-      projectRoot, onStreamError } = require('gulp-tasks-preset');
-
 let gulp = require('gulp');
 let jshint = require('gulp-jshint');
-let notifier = require('node-notifier');
 
-let src = projectRoot('source/scripts/**/*.js');
+let src = 'src/scripts/**/*.js';
 
 
 module.exports = {
 
-  fn: function () {
 
+  name: 'lint-scripts',
+
+
+  description: 'Validates scripts according to linting standards.',
+
+
+  task: done => {
     return gulp.src(src)
-            .pipe(onStreamError('Lint Scripts Task Failed!'))
             .pipe(jshint())
+            .on('end', () => done())
             .pipe(jshint.reporter('jshint-stylish'));
+  },
 
 
-  }
+  env: /(dev|local)/i,
+
 
 };
