@@ -14,7 +14,9 @@ let dest = 'dist/styles';
 
 module.exports = {
 
+
   name: 'styles',
+
 
   task: (done) => {
 
@@ -29,9 +31,12 @@ module.exports = {
             .pipe(gulp.dest(dest).on('end', onStylesDone));
   },
 
+
   watch: 'src/styles/**/*.scss',
 
-  deps: ['lint-styles'],
+
+  dependencies: ['lint-styles'],
+
 
 };
 
